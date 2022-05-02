@@ -24,9 +24,12 @@ app.use(
     })
 );
 app.use(cors());
-app.use(express.static(path.join(__dirname, "dist/mean-stack-crud-app")));
-app.use("/", express.static(path.join(__dirname, "dist/mean-stack-crud-app")));
+app.use(express.static(path.join(__dirname, "./public/scriptorium")));
+app.use("/", express.static(path.join(__dirname, "./public/scriptorium")));
+app.use("/goldencross", express.static(path.join(__dirname, "./public/goldencross")));
+app.use("/*", express.static(path.join(__dirname, "./public/scriptorium")));
 app.use("/api", userRoute);
+
 // Create port
 const port = process.env.PORT || 4000;
 const server = app.listen(port, () => {
