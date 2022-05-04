@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../service/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UserApiService } from 'src/app/service/user-api.service';
 
 @Component({
   selector: 'app-user-edit',
@@ -17,7 +18,7 @@ export class UserEditComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     private actRoute: ActivatedRoute,
-    private apiService: ApiService,
+    private apiService: UserApiService,
     private router: Router
   ) {}
   
@@ -49,7 +50,7 @@ export class UserEditComponent implements OnInit {
     return this.editForm.controls;
   }
   getUser(id) {
-    this.apiService.getUser(id).subscribe((data) => {
+    this.apiService.find(id).subscribe((data) => {
       this.editForm.setValue({
         name: data['name'],
         email: data['email'],
@@ -79,7 +80,7 @@ export class UserEditComponent implements OnInit {
     } else {
       if (window.confirm('Are you sure?')) {
         let id = this.actRoute.snapshot.paramMap.get('id');
-        this.apiService.updateUser(id, this.editForm.value).subscribe({
+        this.apiService.update(id, this.editForm.value).subscribe({
           complete: () => {
             this.router.navigateByUrl('/users-list');
             console.log('Content updated successfully!');

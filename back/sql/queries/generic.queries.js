@@ -38,7 +38,7 @@ module.exports = (pool, tableName) => {
             }
 
             pool.query(
-                `INSERT INTO ${tableName} (${keys}) VALUES (${numbers})`,
+                `INSERT INTO ${tableName} (${keys}) VALUES (${numbers}) RETURNING *`,
                 values,
                 (error, results) => resolve({ error, results })
             );
@@ -65,7 +65,7 @@ module.exports = (pool, tableName) => {
             }
 
             pool.query(
-                `UPDATE ${tableName} SET ${keyValues} WHERE id = $${currentNumber}`, [...values, id],
+                `UPDATE ${tableName} SET ${keyValues} WHERE id = $${currentNumber} RETURNING *`, [...values, id],
                 (error, results) => resolve({ error, results })
             );
         });
@@ -76,7 +76,7 @@ module.exports = (pool, tableName) => {
             const id = parseInt(req.params.id);
 
             pool.query(
-                `DELETE FROM ${tableName} WHERE id = $1`, [id],
+                `WITH deleted AS (DELETE FROM ${tableName} WHERE id = $1 RETURNING *) SELECT count(*) FROM deleted`, [id],
                 (error, results) => resolve({ error, results })
             );
         });

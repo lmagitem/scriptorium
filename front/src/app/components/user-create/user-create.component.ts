@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { ApiService } from '../../service/api.service';
 import { Component, OnInit, NgZone } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UserApiService } from 'src/app/service/user-api.service';
 
 @Component({
   selector: 'app-user-create',
@@ -16,7 +17,7 @@ export class UserCreateComponent implements OnInit {
     public fb: FormBuilder,
     private router: Router,
     private ngZone: NgZone,
-    private apiService: ApiService
+    private apiService: UserApiService
   ) {
     this.mainForm();
   }
@@ -50,7 +51,7 @@ export class UserCreateComponent implements OnInit {
     if (!this.userForm.valid) {
       return false;
     } else {
-      return this.apiService.createUser(this.userForm.value).subscribe({
+      return this.apiService.add(this.userForm.value).subscribe({
         complete: () => {
           console.log('user successfully created!'),
             this.ngZone.run(() => this.router.navigateByUrl('/users-list'));

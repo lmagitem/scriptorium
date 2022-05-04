@@ -6,7 +6,7 @@ module.exports = (queries) => {
             .getAll(req, res)
             .then((q) => {
                 if (q.error) throw q.error;
-                console.log("Query results: ", q);
+                console.log("Query results: ", q.results);
                 res.status(200).json(q.results.rows);
             })
             .catch((e) => {
@@ -21,8 +21,12 @@ module.exports = (queries) => {
             .getById(req, res)
             .then((q) => {
                 if (q.error) throw q.error;
-                console.log("Query results: ", q);
-                res.status(200).json(q.results.rows);
+                console.log("Query results: ", q.results);
+                const entity =
+                    q.results.rows !== undefined && q.results.rows.length > 0 ?
+                    q.results.rows[0] :
+                    null;
+                res.status(200).json(entity);
             })
             .catch((e) => {
                 throw e;
@@ -36,8 +40,12 @@ module.exports = (queries) => {
             .addOne(req, res)
             .then((q) => {
                 if (q.error) throw q.error;
-                console.log("Query results: ", q);
-                res.status(201).send(`Entity added with ID: ${q.results.insertId}`);
+                console.log("Query results: ", q.results);
+                const entity =
+                    q.results.rows !== undefined && q.results.rows.length > 0 ?
+                    q.results.rows[0] :
+                    null;
+                res.status(201).json(entity);
             })
             .catch((e) => {
                 throw e;
@@ -51,8 +59,12 @@ module.exports = (queries) => {
             .updateById(req, res)
             .then((q) => {
                 if (q.error) throw q.error;
-                console.log("Query results: ", q);
-                res.status(200).send(`Entity modified with ID: ${req.params.id}`);
+                console.log("Query results: ", q.results);
+                const entity =
+                    q.results.rows !== undefined && q.results.rows.length > 0 ?
+                    q.results.rows[0] :
+                    null;
+                res.status(200).json(entity);
             })
             .catch((e) => {
                 throw e;
@@ -66,8 +78,12 @@ module.exports = (queries) => {
             .deleteById(req, res)
             .then((q) => {
                 if (q.error) throw q.error;
-                console.log("Query results: ", q);
-                res.status(200).send(`Entity deleted with ID: ${req.params.id}`);
+                console.log("Query results: ", q.results);
+                const deleted =
+                    q.results.rows !== undefined && q.results.rows.length > 0 ?
+                    !!q.results.rows[0].count :
+                    false;
+                res.status(200).send(deleted);
             })
             .catch((e) => {
                 throw e;
