@@ -20,10 +20,11 @@ export class UserEditComponent implements OnInit {
     private apiService: ApiService,
     private router: Router
   ) {}
+  
   ngOnInit() {
-    this.updateuser();
+    this.updateUser();
     let id = this.actRoute.snapshot.paramMap.get('id');
-    this.getuser(id);
+    this.getUser(id);
     this.editForm = this.fb.group({
       name: ['', [Validators.required]],
       email: [
@@ -34,7 +35,7 @@ export class UserEditComponent implements OnInit {
         ],
       ],
       designation: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
     });
   }
   // Choose options with select-dropdown
@@ -47,17 +48,17 @@ export class UserEditComponent implements OnInit {
   get myForm() {
     return this.editForm.controls;
   }
-  getuser(id) {
-    this.apiService.getuser(id).subscribe((data) => {
+  getUser(id) {
+    this.apiService.getUser(id).subscribe((data) => {
       this.editForm.setValue({
         name: data['name'],
         email: data['email'],
         designation: data['designation'],
-        phoneNumber: data['phoneNumber'],
+        phone: data['phone'],
       });
     });
   }
-  updateuser() {
+  updateUser() {
     this.editForm = this.fb.group({
       name: ['', [Validators.required]],
       email: [
@@ -68,7 +69,7 @@ export class UserEditComponent implements OnInit {
         ],
       ],
       designation: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
     });
   }
   onSubmit() {
@@ -78,7 +79,7 @@ export class UserEditComponent implements OnInit {
     } else {
       if (window.confirm('Are you sure?')) {
         let id = this.actRoute.snapshot.paramMap.get('id');
-        this.apiService.updateuser(id, this.editForm.value).subscribe({
+        this.apiService.updateUser(id, this.editForm.value).subscribe({
           complete: () => {
             this.router.navigateByUrl('/users-list');
             console.log('Content updated successfully!');

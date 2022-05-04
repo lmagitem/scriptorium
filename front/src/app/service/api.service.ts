@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
@@ -10,21 +10,25 @@ import {
   providedIn: 'root',
 })
 export class ApiService {
-  baseUri: string = 'http://localhost:4000/api';
-  headers = new HttpHeaders().set('Content-Type', 'application/json');
+  private baseUri = isDevMode() ? 'http://localhost:80/' : '';
+  private headers = new HttpHeaders().set('Content-Type', 'application/json');
+
   constructor(private http: HttpClient) {}
+
   // Create
-  createuser(data): Observable<any> {
-    let url = `${this.baseUri}/create`;
+  createUser(data): Observable<any> {
+    let url = `${this.baseUri}api/users`;
     return this.http.post(url, data).pipe(catchError(this.errorMgmt));
   }
+
   // Get all users
-  getusers() {
-    return this.http.get(`${this.baseUri}`);
+  getUsers() {
+    return this.http.get(`${this.baseUri}api/users`);
   }
+
   // Get user
-  getuser(id): Observable<any> {
-    let url = `${this.baseUri}/read/${id}`;
+  getUser(id): Observable<any> {
+    let url = `${this.baseUri}api/users/${id}`;
     return this.http.get(url, { headers: this.headers }).pipe(
       map((res: Response) => {
         return res || {};
@@ -32,20 +36,24 @@ export class ApiService {
       catchError(this.errorMgmt)
     );
   }
+
   // Update user
-  updateuser(id, data): Observable<any> {
-    let url = `${this.baseUri}/update/${id}`;
+  updateUser(id, data): Observable<any> {
+    let url = `${this.baseUri}api/users/${id}`;
     return this.http
       .put(url, data, { headers: this.headers })
       .pipe(catchError(this.errorMgmt));
   }
+
   // Delete user
-  deleteuser(id): Observable<any> {
-    let url = `${this.baseUri}/delete/${id}`;
+  deleteUser(id): Observable<any> {
+    console.log(id);
+    let url = `${this.baseUri}api/users/${id}`;
     return this.http
       .delete(url, { headers: this.headers })
       .pipe(catchError(this.errorMgmt));
   }
+
   // Error handling
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';

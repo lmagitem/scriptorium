@@ -1,44 +1,47 @@
 const express = require("express");
+const https = require("https");
+const http = require("http");
 const path = require("path");
-const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-// Connecting with mongo db
-mongoose
-    .connect("mongodb://127.0.0.1:27017/mydatabase")
-    .then((x) => {
-        console.log(
-            `Connected to Mongo! Database name: "${x.connections[0].name}"`
-        );
-    })
-    .catch((err) => {
-        console.error("Error connecting to mongo", err.reason);
-    });
+const createError = require("http-errors");
+const pool = require("./sql/db-conf")();
+
 // Setting up port with express js
-const userRoute = require("../back/routes/user.route");
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use(
     bodyParser.urlencoded({
         extended: false,
     })
 );
-app.use(cors());
-app.use(express.static(path.join(__dirname, "./public/scriptorium")));
+
+// API endpoints
+require("./api/user.api")(app, require("./sql/queries/generic.queries")(pool, "users"));
+
+// Other endpoints
+app.use(
+    "/goldencross",
+    express.static(path.join(__dirname, "./public/goldencross"))
+);
 app.use("/", express.static(path.join(__dirname, "./public/scriptorium")));
-app.use("/goldencross", express.static(path.join(__dirname, "./public/goldencross")));
-app.use("/*", express.static(path.join(__dirname, "./public/scriptorium")));
-app.use("/api", userRoute);
+app.use("*", express.static(path.join(__dirname, "./public/scriptorium")));
+
+/* const options = {
+  key: fs.readFileSync("key.pem"),
+  cert: fs.readFileSync("cert.pem"),
+}; */
 
 // Create port
-const port = process.env.PORT || 4000;
-const server = app.listen(port, () => {
-    console.log("Connected to port " + port);
-});
+http.createServer(app).listen(80);
+// https.createServer(options, app).listen(443);
+
 // Find 404 and hand over to error handler
 app.use((req, res, next) => {
     next(createError(404));
 });
+
 // error handler
 app.use(function(err, req, res, next) {
     console.error(err.message); // Log error message in our server's console

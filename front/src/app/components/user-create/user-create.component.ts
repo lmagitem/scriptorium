@@ -32,7 +32,7 @@ export class UserCreateComponent implements OnInit {
         ],
       ],
       designation: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
     });
   }
   // Choose designation with select dropdown
@@ -50,7 +50,7 @@ export class UserCreateComponent implements OnInit {
     if (!this.userForm.valid) {
       return false;
     } else {
-      return this.apiService.createuser(this.userForm.value).subscribe({
+      return this.apiService.createUser(this.userForm.value).subscribe({
         complete: () => {
           console.log('user successfully created!'),
             this.ngZone.run(() => this.router.navigateByUrl('/users-list'));

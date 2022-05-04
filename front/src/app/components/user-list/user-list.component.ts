@@ -9,17 +9,17 @@ import { ApiService } from '../../service/api.service';
 export class UserListComponent implements OnInit {
   user: any = [];
   constructor(private apiService: ApiService) {
-    this.readuser();
+    this.readUser();
   }
   ngOnInit() {}
-  readuser() {
-    this.apiService.getusers().subscribe((data) => {
+  readUser() {
+    this.apiService.getUsers().subscribe((data) => {
       this.user = data;
     });
   }
   removeuser(user, index) {
     if (window.confirm('Are you sure?')) {
-      this.apiService.deleteuser(user._id).subscribe((data) => {
+      this.apiService.deleteUser(user.id).subscribe((data) => {
         this.user.splice(index, 1);
       });
     }

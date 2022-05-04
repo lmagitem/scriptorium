@@ -40,12 +40,12 @@
                 </div>
                 <div class="form-group">
                     <label for="inputVerify3">Mobile No</label>
-                    <input class="form-control" type="text" formControlName="phoneNumber" />
+                    <input class="form-control" type="text" formControlName="phone" />
                     <!-- error -->
-                    <div class="invalid-feedback" *ngIf="submitted && myForm['phoneNumber'].errors?.['required']">
+                    <div class="invalid-feedback" *ngIf="submitted && myForm['phone'].errors?.['required']">
                         Enter your phone number.
                     </div>
-                    <div class="invalid-feedback" *ngIf="submitted && myForm['phoneNumber'].errors?.['pattern']">
+                    <div class="invalid-feedback" *ngIf="submitted && myForm['phone'].errors?.['pattern']">
                         Enter Numbers Only
                     </div>
                 </div>
