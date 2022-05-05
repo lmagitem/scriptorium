@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const express = require("express");
 const https = require("https");
 const http = require("http");
@@ -18,7 +20,10 @@ app.use(
 );
 
 // API endpoints
-require("./api/user.api")(app, require("./sql/queries/generic.queries")(pool, "users"));
+require("./api/user.api")(
+    app,
+    require("./sql/queries/generic.queries")(pool, "users")
+);
 
 // Other endpoints
 app.use(
@@ -28,14 +33,8 @@ app.use(
 app.use("/", express.static(path.join(__dirname, "./public/scriptorium")));
 app.use("*", express.static(path.join(__dirname, "./public/scriptorium")));
 
-/* const options = {
-  key: fs.readFileSync("key.pem"),
-  cert: fs.readFileSync("cert.pem"),
-}; */
-
 // Create port
-http.createServer(app).listen(80);
-// https.createServer(options, app).listen(443);
+http.createServer(app).listen(8080, () => console.log("Server started on port 8080"));
 
 // Find 404 and hand over to error handler
 app.use((req, res, next) => {

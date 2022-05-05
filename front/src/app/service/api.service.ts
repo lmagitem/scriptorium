@@ -10,7 +10,7 @@ import {
 /** Generic API service to be extended by entity services. */
 export abstract class ApiService<T> {
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
-  private baseUri = isDevMode() ? 'http://localhost:80/' : '';
+  private baseUri = isDevMode() ? 'http://localhost:8080/' : '';
   protected abstract entityName: string;
 
   constructor(protected http: HttpClient) {}
