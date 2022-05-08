@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UserListComponent } from './components/user-list/user-list.component';
-import { UserCreateComponent } from './components/user-create/user-create.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -13,7 +12,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AppComponent,
     UserEditComponent,
     UserListComponent,
-    UserCreateComponent,
   ],
   imports: [
     BrowserModule,

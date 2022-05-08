@@ -14,14 +14,13 @@ export class UserEditComponent implements OnInit {
   submitted = false;
   editForm: FormGroup;
   userData: User[];
-  userProfile: any = ['Finance', 'BDM', 'HR', 'Sales', 'Admin'];
   constructor(
     public fb: FormBuilder,
     private actRoute: ActivatedRoute,
     private apiService: UserApiService,
     private router: Router
   ) {}
-  
+
   ngOnInit() {
     this.updateUser();
     let id = this.actRoute.snapshot.paramMap.get('id');
@@ -35,14 +34,8 @@ export class UserEditComponent implements OnInit {
           Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
         ],
       ],
-      designation: ['', [Validators.required]],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-    });
-  }
-  // Choose options with select-dropdown
-  updateProfile(e) {
-    this.editForm.get('designation').setValue(e, {
-      onlySelf: true,
+      picture: ['', [Validators.required]],
+      nickname: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
     });
   }
   // Getter to access form control
@@ -54,8 +47,8 @@ export class UserEditComponent implements OnInit {
       this.editForm.setValue({
         name: data['name'],
         email: data['email'],
-        designation: data['designation'],
-        phone: data['phone'],
+        picture: data['picture'],
+        nickname: data['nickname'],
       });
     });
   }
@@ -69,8 +62,8 @@ export class UserEditComponent implements OnInit {
           Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
         ],
       ],
-      designation: ['', [Validators.required]],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      picture: [''],
+      nickname: [''],
     });
   }
   onSubmit() {

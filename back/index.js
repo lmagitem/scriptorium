@@ -45,11 +45,9 @@ const strategy = new Auth0Strategy({
     (accessToken, refreshToken, extraParams, profile, done) => done(null, profile)
 );
 
+const userQueries = require("./sql/queries/user.queries")(pool);
 // API endpoints
-require("./api/user.api")(
-    app,
-    require("./sql/queries/generic.queries")(pool, "users")
-);
+require("./api/user.api")(app, userQueries);
 
 // Initialize session
 app.use(expressSession(session));
@@ -66,7 +64,7 @@ app.use((req, res, next) => {
     res.locals.isAuthenticated = req.isAuthenticated();
     next();
 });
-app.use("/", require("./auth/auth"));
+app.use("/", require("./auth/auth")(userQueries));
 
 const secured = (req, res, next) => {
     if (req.user) {
@@ -92,10 +90,16 @@ app.use(
 app.use("/", express.static(path.join(__dirname, "./public/scriptorium")));
 app.use("*", express.static(path.join(__dirname, "./public/scriptorium")));
 
+app.get("/", function(req, res) {
+    res.sendFile("./public/scriptorium/index.js");
+});
+
+
 // Expose server
 http
     .createServer(app)
     .listen(8080, () => console.log("Server started on port 8080"));
+
 
 // Find 404 and hand over to error handler
 app.use((req, res, next) => {

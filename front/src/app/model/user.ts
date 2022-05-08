@@ -1,6 +1,8 @@
 export class User {
+  id:number;
+  sub:string;
   name: string;
   email: string;
-  designation: string;
-  phone: number;
+  picture: string;
+  nickname: string;
 }
