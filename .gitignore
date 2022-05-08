@@ -1,7 +1,8 @@
 # Project ignores
 /back/public/
 .ssh
-local-secrets.js
+.env
+local.env
 
 # Logs
 logs

@@ -6,7 +6,7 @@ module.exports = (queries) => {
             .getAll(req, res)
             .then((q) => {
                 if (q.error) throw q.error;
-                console.log("Query results: ", q.results);
+                // console.log("Query results: ", q.results);
                 res.status(200).json(q.results.rows);
             })
             .catch((e) => {
@@ -21,7 +21,7 @@ module.exports = (queries) => {
             .getById(req, res)
             .then((q) => {
                 if (q.error) throw q.error;
-                console.log("Query results: ", q.results);
+                // console.log("Query results: ", q.results);
                 const entity =
                     q.results.rows !== undefined && q.results.rows.length > 0 ?
                     q.results.rows[0] :
@@ -40,7 +40,7 @@ module.exports = (queries) => {
             .addOne(req, res)
             .then((q) => {
                 if (q.error) throw q.error;
-                console.log("Query results: ", q.results);
+                // console.log("Query results: ", q.results);
                 const entity =
                     q.results.rows !== undefined && q.results.rows.length > 0 ?
                     q.results.rows[0] :
@@ -59,7 +59,7 @@ module.exports = (queries) => {
             .updateById(req, res)
             .then((q) => {
                 if (q.error) throw q.error;
-                console.log("Query results: ", q.results);
+                // console.log("Query results: ", q.results);
                 const entity =
                     q.results.rows !== undefined && q.results.rows.length > 0 ?
                     q.results.rows[0] :
@@ -78,7 +78,7 @@ module.exports = (queries) => {
             .deleteById(req, res)
             .then((q) => {
                 if (q.error) throw q.error;
-                console.log("Query results: ", q.results);
+                // console.log("Query results: ", q.results);
                 const deleted =
                     q.results.rows !== undefined && q.results.rows.length > 0 ?
                     !!q.results.rows[0].count :
