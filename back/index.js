@@ -21,7 +21,6 @@ app.use(
 );
 
 require("dotenv").config({ path: isProd ? "./.env" : "./local.env" });
-const pool = require("./sql/db-conf")();
 
 // Session configuration
 const session = {
@@ -45,9 +44,8 @@ const strategy = new Auth0Strategy({
     (accessToken, refreshToken, extraParams, profile, done) => done(null, profile)
 );
 
-const userQueries = require("./sql/queries/user.queries")(pool);
 // API endpoints
-require("./api/user.api")(app, userQueries);
+require("./api/user.api")(app);
 
 // Initialize session
 app.use(expressSession(session));
@@ -64,7 +62,7 @@ app.use((req, res, next) => {
     res.locals.isAuthenticated = req.isAuthenticated();
     next();
 });
-app.use("/", require("./auth/auth")(userQueries));
+app.use("/", require("./auth/auth")());
 
 const secured = (req, res, next) => {
     if (req.user) {

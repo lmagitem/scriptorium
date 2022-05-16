@@ -1,7 +1,6 @@
 import { User } from './../../model/user';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from '../../service/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserApiService } from 'src/app/service/user-api.service';
 
@@ -34,8 +33,8 @@ export class UserEditComponent implements OnInit {
           Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
         ],
       ],
-      picture: ['', [Validators.required]],
-      nickname: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      picture: ['', []],
+      nickname: ['', []],
     });
   }
   // Getter to access form control

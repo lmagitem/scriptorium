@@ -1,93 +1,36 @@
 module.exports = (queries) => {
     // Get all entities
-    const getAll = (req, res) => {
-        console.log("Received getAll call.");
-        queries
-            .getAll(req, res)
-            .then((q) => {
-                if (q.error) throw q.error;
-                // console.log("Query results: ", q.results);
-                res.status(200).json(q.results.rows);
-            })
-            .catch((e) => {
-                throw e;
-            });
+    const getAll = async(req, res) => {
+        const q = await queries.getAll(req, res);
+        res.status(200).json(q.rows);
     };
 
     // Get single entity
-    const getById = (req, res) => {
-        console.log("Received getById call.");
-        queries
-            .getById(req, res)
-            .then((q) => {
-                if (q.error) throw q.error;
-                // console.log("Query results: ", q.results);
-                const entity =
-                    q.results.rows !== undefined && q.results.rows.length > 0 ?
-                    q.results.rows[0] :
-                    null;
-                res.status(200).json(entity);
-            })
-            .catch((e) => {
-                throw e;
-            });
+    const getById = async(req, res) => {
+        const q = await queries.getById(req, res);
+        const entity = !!q.rows && q.rows.length > 0 ? q.rows[0] : null;
+        res.status(200).json(entity);
     };
 
     // Add entity
-    const addOne = (req, res) => {
-        console.log("Received addOne call.");
-        queries
-            .addOne(req, res)
-            .then((q) => {
-                if (q.error) throw q.error;
-                // console.log("Query results: ", q.results);
-                const entity =
-                    q.results.rows !== undefined && q.results.rows.length > 0 ?
-                    q.results.rows[0] :
-                    null;
-                res.status(201).json(entity);
-            })
-            .catch((e) => {
-                throw e;
-            });
+    const addOne = async(req, res) => {
+        const q = await queries.addOne(req, res);
+        const entity = !!q.rows && q.rows.length > 0 ? q.rows[0] : null;
+        res.status(201).json(entity);
     };
 
     // Update entity
-    const updateById = (req, res) => {
-        console.log("Received updateById call.");
-        queries
-            .updateById(req, res)
-            .then((q) => {
-                if (q.error) throw q.error;
-                // console.log("Query results: ", q.results);
-                const entity =
-                    q.results.rows !== undefined && q.results.rows.length > 0 ?
-                    q.results.rows[0] :
-                    null;
-                res.status(200).json(entity);
-            })
-            .catch((e) => {
-                throw e;
-            });
+    const updateById = async(req, res) => {
+        const q = await queries.updateById(req, res);
+        const entity = !!q.rows && q.rows.length > 0 ? q.rows[0] : null;
+        res.status(200).json(entity);
     };
 
     // Delete entity
-    const deleteById = (req, res) => {
-        console.log("Received deleteById call.");
-        queries
-            .deleteById(req, res)
-            .then((q) => {
-                if (q.error) throw q.error;
-                // console.log("Query results: ", q.results);
-                const deleted =
-                    q.results.rows !== undefined && q.results.rows.length > 0 ?
-                    !!q.results.rows[0].count :
-                    false;
-                res.status(200).send(deleted);
-            })
-            .catch((e) => {
-                throw e;
-            });
+    const deleteById = async(req, res) => {
+        const q = await queries.deleteById(req, res);
+        const deleted = !!q.rows && q.rows.length > 0 ? !!q.rows[0].count : false;
+        res.status(200).send(deleted);
     };
 
     return {

@@ -1,8 +1,9 @@
-module.exports = (userQueries) => {
+module.exports = () => {
     const express = require("express");
     const router = express.Router();
     const passport = require("passport");
     const querystring = require("querystring");
+    const userService = require("../services/user.service")();
 
     router.get(
         "/login",
@@ -27,7 +28,7 @@ module.exports = (userQueries) => {
                     return next(err);
                 }
 
-                saveUser(req.user || {}, userQueries);
+                userService.saveUser(req.user || {});
 
                 const returnTo = req.session.returnTo;
                 delete req.session.returnTo;
@@ -62,78 +63,3 @@ module.exports = (userQueries) => {
 
     return router;
 };
-
-function saveUser(user, userQueries) {
-    const sub = user.user_id;
-    let existingUser = null;
-    const newUser = {
-        sub,
-        name: user.displayName,
-        email: user._json !== undefined ? user._json.email : "",
-        picture: user.picture,
-        nickname: user.nickname,
-    };
-
-    if (sub != undefined) {
-        // Let's see if that user exists in db
-        userQueries
-            .getBySub(sub)
-            .then((q) => {
-                if (q.error) throw q.error;
-                existingUser =
-                    q.results.rows !== undefined && q.results.rows.length > 0 ?
-                    q.results.rows[0] :
-                    null;
-
-                if (existingUser == null) {
-                    // If not, let's add it
-                    userQueries
-                        .addOne(newUser)
-                        .then((q) => {
-                            if (q.error) throw q.error;
-                            existingUser =
-                                q.results.rows !== undefined && q.results.rows.length > 0 ?
-                                q.results.rows[0] :
-                                null;
-                            console.log(
-                                `User ${existingUser.name} (${existingUser.sub}) added in database.`
-                            );
-                        })
-                        .catch((e) => {
-                            throw e;
-                        });
-                } else {
-                    // If yes, let's check if it needs a refresh
-                    if (
-                        existingUser.name != newUser.name ||
-                        existingUser.email != newUser.email ||
-                        existingUser.picture != newUser.picture ||
-                        existingUser.nickname != newUser.nickname
-                    ) {
-                        userQueries
-                            .updateOne(newUser)
-                            .then((q) => {
-                                if (q.error) throw q.error;
-                                existingUser =
-                                    q.results.rows !== undefined && q.results.rows.length > 0 ?
-                                    q.results.rows[0] :
-                                    null;
-                                console.log(
-                                    `User ${existingUser.name} (${existingUser.sub}) updated in database.`
-                                );
-                            })
-                            .catch((e) => {
-                                throw e;
-                            });
-                    } else {
-                        console.log(
-                            `User ${existingUser.name} (${existingUser.sub}) logged in.`
-                        );
-                    }
-                }
-            })
-            .catch((e) => {
-                throw e;
-            });
-    }
-}

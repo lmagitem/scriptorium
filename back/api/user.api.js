@@ -1,4 +1,5 @@
-module.exports = (app, queries) => {
+module.exports = (app) => {
+    const queries = require("../sql/queries/user.queries")();
     const genericApi = require("./generic.api")(queries);
 
     app.get("/api/users", genericApi.getAll);
