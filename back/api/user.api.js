@@ -1,10 +1,11 @@
 module.exports = (app) => {
-    const queries = require("../sql/queries/user.queries")();
-    const genericApi = require("./generic.api")(queries);
+    const guards = require("../auth/guards")();
+    const genericApi = require("./generic.api")(
+        require("../sql/queries/user.queries")()
+    );
 
-    app.get("/api/users", genericApi.getAll);
-    app.get("/api/users/:id", genericApi.getById);
-    app.post("/api/users", genericApi.addOne);
-    app.put("/api/users/:id", genericApi.updateById);
-    app.delete("/api/users/:id", genericApi.deleteById);
+    app.get("/api/users", guards.mustBeAdmin, genericApi.getAll);
+    app.get("/api/users/:id", guards.mustBeAdmin, genericApi.getById);
+    app.put("/api/users/:id", guards.mustBeAdmin, genericApi.updateById);
+    app.delete("/api/users/:id", guards.mustBeAdmin, genericApi.deleteById);
 };

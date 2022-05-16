@@ -13,6 +13,10 @@ module.exports = () => {
     const getBySub = async(sub) =>
         pool.query(`SELECT * FROM users WHERE sub = $1`, [sub]);
 
+    // Get user's admin status
+    const isAdminBySub = async(sub) =>
+        pool.query(`SELECT admin FROM users WHERE sub = $1`, [sub]);
+
     // Add an entity
     const addOne = async(user) => {
         if (!_.has(user, "sub") ||
@@ -50,6 +54,7 @@ module.exports = () => {
         getAll,
         getById,
         getBySub,
+        isAdminBySub,
         addOne,
         updateById,
         updateOne,

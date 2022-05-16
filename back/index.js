@@ -44,9 +44,6 @@ const strategy = new Auth0Strategy({
     (accessToken, refreshToken, extraParams, profile, done) => done(null, profile)
 );
 
-// API endpoints
-require("./api/user.api")(app);
-
 // Initialize session
 app.use(expressSession(session));
 passport.use(strategy);
@@ -64,21 +61,8 @@ app.use((req, res, next) => {
 });
 app.use("/", require("./auth/auth")());
 
-const secured = (req, res, next) => {
-    if (req.user) {
-        return next();
-    }
-    req.session.returnTo = req.originalUrl;
-    res.redirect("/login");
-};
-const mustBeAdmin = (req, res, next) => {
-    // TODO
-    if (req.user) {
-        return next();
-    }
-    req.session.returnTo = req.originalUrl;
-    res.redirect("/login");
-};
+// API endpoints
+require("./api/user.api")(app);
 
 // Other endpoints
 app.use(
@@ -88,24 +72,20 @@ app.use(
 app.use("/", express.static(path.join(__dirname, "./public/scriptorium")));
 app.use("*", express.static(path.join(__dirname, "./public/scriptorium")));
 
-app.get("/", function(req, res) {
+app.get("/", (req, res) => {
     res.sendFile("./public/scriptorium/index.js");
 });
-
 
 // Expose server
 http
     .createServer(app)
     .listen(8080, () => console.log("Server started on port 8080"));
 
-
 // Find 404 and hand over to error handler
-app.use((req, res, next) => {
-    next(createError(404));
-});
+app.use((req, res, next) => next(createError(404)));
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
     console.error(err.message); // Log error message in our server's console
     if (!err.statusCode) err.statusCode = 500; // If err has no specified error code, set error code to 'Internal Server Error (500)'
     res.status(err.statusCode).send(err.message); // All HTTP requests must have a response, so let's send back an error with its status code and message

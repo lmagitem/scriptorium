@@ -24,7 +24,6 @@ module.exports = () => {
                 r = await userQueries.addOne(newUser);
                 oldUser = !!r.rows && r.rows.length > 0 ? r.rows[0] : null;
                 console.log(`User ${oldUser.name} (${oldUser.sub}) added in database.`);
-
             } else {
                 // If yes, let's check if it needs a refresh
                 if (
@@ -46,7 +45,18 @@ module.exports = () => {
         }
     };
 
+    // Simply checks if a given user has admin rights
+    const isAdmin = async(user) => {
+        const sub = !!user ? user.user_id : null;
+        if (sub == null) return false;
+
+        const r = await userQueries.isAdminBySub(sub);
+        const firstRow = !!r.rows && r.rows.length > 0 ? r.rows[0] : null;
+        return !!firstRow.admin;
+    };
+
     return {
         saveUser,
+        isAdmin,
     };
 };
