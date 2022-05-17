@@ -23,7 +23,11 @@ module.exports = () => {
                 // If not, let's add it
                 r = await userQueries.addOne(newUser);
                 oldUser = !!r.rows && r.rows.length > 0 ? r.rows[0] : null;
-                console.log(`User ${oldUser.name} (${oldUser.sub}) added in database.`);
+
+                if (process.env.LOG_LEVEL >= LOG_LEVEL.INFO)
+                    LOG("INFO",
+                        `User ${oldUser.name} (${oldUser.sub}) added in database`
+                    );
             } else {
                 // If yes, let's check if it needs a refresh
                 if (
@@ -35,11 +39,14 @@ module.exports = () => {
                     r = await userQueries.updateOne(newUser);
 
                     oldUser = !!r.rows && r.rows.length > 0 ? r.rows[0] : null;
-                    console.log(
-                        `User ${oldUser.name} (${oldUser.sub}) updated in database.`
-                    );
+
+                    if (process.env.LOG_LEVEL >= LOG_LEVEL.INFO)
+                        LOG("INFO",
+                            `User ${oldUser.name} (${oldUser.sub}) updated in database`
+                        );
                 } else {
-                    console.log(`User ${oldUser.name} (${oldUser.sub}) logged in.`);
+                    if (process.env.LOG_LEVEL >= LOG_LEVEL.INFO)
+                        LOG("INFO", `User ${oldUser.name} (${oldUser.sub}) logged in`);
                 }
             }
         }

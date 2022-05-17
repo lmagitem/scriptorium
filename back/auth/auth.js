@@ -17,16 +17,12 @@ module.exports = () => {
 
     router.get("/callback", (req, res, next) => {
         passport.authenticate("auth0", (err, user, info) => {
-            if (err) {
-                return next(err);
-            }
-            if (!user) {
-                return res.redirect("/login");
-            }
+            if (err) return next(err);
+
+            if (!user) return res.redirect("/login");
+
             req.logIn(user, (err) => {
-                if (err) {
-                    return next(err);
-                }
+                if (err) return next(err);
 
                 userService.saveUser(req.user || {});
 
@@ -44,10 +40,7 @@ module.exports = () => {
         const port = req.connection.localPort;
 
         if (port !== undefined && port !== 80 && port !== 443) {
-            returnTo =
-                process.env.NODE_ENV === "production" ?
-                `${returnTo}/` :
-                `${returnTo}:${port}/`;
+            returnTo = isProd ? `${returnTo}/` : `${returnTo}:${port}/`;
         }
 
         const logoutURL = new URL(`https://${process.env.AUTH0_DOMAIN}/v2/logout`);

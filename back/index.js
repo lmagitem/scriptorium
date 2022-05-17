@@ -4,14 +4,18 @@ const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const createError = require("http-errors");
-
 const expressSession = require("express-session");
+const MemoryStore = require("memorystore")(expressSession);
 const passport = require("passport");
 const Auth0Strategy = require("passport-auth0");
 
+// Environment variables
+isProd = process.env.args === "prod";
+require("dotenv").config({ path: isProd ? "./.env" : "./local.env" });
+require("./utils/log");
+
 // Setting up port with express js
 const app = express();
-const isProd = app.get("env") === "production";
 app.use(cors());
 app.use(bodyParser.json());
 app.use(
@@ -20,18 +24,21 @@ app.use(
     })
 );
 
-require("dotenv").config({ path: isProd ? "./.env" : "./local.env" });
-
 // Session configuration
 const session = {
     secret: process.env.SESSION_SECRET,
-    cookie: {},
+    cookie: { maxAge: 86400000 },
     resave: false,
     saveUninitialized: false,
+    store: new MemoryStore({
+        checkPeriod: 86400000, // prune expired entries every 24h
+    }),
 };
 if (isProd) {
     // Serve secure cookies, requires HTTPS
     session.cookie.secure = true;
+    // Trust Nginx
+    app.set("trust proxy", 1);
 }
 
 // Passport configuration
@@ -42,6 +49,7 @@ const strategy = new Auth0Strategy({
         callbackURL: process.env.AUTH0_CALLBACK_URL,
     },
     (accessToken, refreshToken, extraParams, profile, done) => done(null, profile)
+
 );
 
 // Initialize session
@@ -79,7 +87,7 @@ app.get("/", (req, res) => {
 // Expose server
 http
     .createServer(app)
-    .listen(8080, () => console.log("Server started on port 8080"));
+    .listen(8080, () => LOG("INFO", "Server started on port 8080"));
 
 // Find 404 and hand over to error handler
 app.use((req, res, next) => next(createError(404)));
