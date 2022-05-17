@@ -13,6 +13,17 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=lmagitem_scriptorium&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=lmagitem_scriptorium)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=lmagitem_scriptorium&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=lmagitem_scriptorium)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=lmagitem_scriptorium&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=lmagitem_scriptorium)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=lmagitem_scriptorium&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=lmagitem_scriptorium)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=lmagitem_scriptorium&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=lmagitem_scriptorium)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=lmagitem_scriptorium&metric=coverage)](https://sonarcloud.io/summary/new_code?id=lmagitem_scriptorium)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=lmagitem_scriptorium&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=lmagitem_scriptorium)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=lmagitem_scriptorium&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=lmagitem_scriptorium)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=lmagitem_scriptorium&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=lmagitem_scriptorium)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=lmagitem_scriptorium&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=lmagitem_scriptorium)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=lmagitem_scriptorium&metric=bugs)](https://sonarcloud.io/summary/new_code?id=lmagitem_scriptorium)
 
 
 
