@@ -2,7 +2,7 @@ module.exports = (tableName) => {
     const pool = require("../db-conf")();
 
     // Get all entities
-    const getAll = async(req, res) => {
+    const getAll = async(_req, _res) => {
         if (process.env.LOG_LEVEL >= LOG_LEVEL.INFO)
             LOG("INFO", `Processing getAll(${tableName}) query`);
 
@@ -10,7 +10,7 @@ module.exports = (tableName) => {
     };
 
     // Get single entity
-    const getById = async(req, res) => {
+    const getById = async(req, _res) => {
         const id = parseInt(req.params.id);
 
         if (process.env.LOG_LEVEL >= LOG_LEVEL.INFO)
@@ -20,7 +20,7 @@ module.exports = (tableName) => {
     };
 
     // Add an entity
-    const addOne = async(req, res) => {
+    const addOne = async(req, _res) => {
         if (process.env.LOG_LEVEL >= LOG_LEVEL.INFO)
             LOG("INFO", `Processing addOne(${tableName}) query`);
 
@@ -45,7 +45,7 @@ module.exports = (tableName) => {
     };
 
     // Update entity
-    const updateById = async(req, res) => {
+    const updateById = async(req, _res) => {
         const id = parseInt(req.params.id);
 
         if (process.env.LOG_LEVEL >= LOG_LEVEL.INFO)
@@ -72,7 +72,7 @@ module.exports = (tableName) => {
     };
 
     // Delete entity
-    const deleteById = async(req, res) => {
+    const deleteById = async(req, _res) => {
         const id = parseInt(req.params.id);
 
         if (process.env.LOG_LEVEL >= LOG_LEVEL.INFO)

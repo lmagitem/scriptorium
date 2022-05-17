@@ -13,42 +13,36 @@ module.exports = () => {
             nickname: user.nickname,
         };
 
-        if (sub != undefined) {
-            // Let's see if that user exists in db
-            let r = await userQueries.getBySub(sub);
+        if (sub == undefined) return;
 
-            oldUser = !!r.rows && r.rows.length > 0 ? r.rows[0] : null;
+        let r = await userQueries.getBySub(sub);
+        oldUser = getRowsContent(r);
 
-            if (oldUser == null) {
-                // If not, let's add it
-                r = await userQueries.addOne(newUser);
-                oldUser = !!r.rows && r.rows.length > 0 ? r.rows[0] : null;
+        // If the user doesn't exist in db, let's add it
+        if (oldUser == null) {
+            r = await userQueries.addOne(newUser);
+            oldUser = getRowsContent(r);
 
-                if (process.env.LOG_LEVEL >= LOG_LEVEL.INFO)
-                    LOG("INFO",
-                        `User ${oldUser.name} (${oldUser.sub}) added in database`
-                    );
-            } else {
-                // If yes, let's check if it needs a refresh
-                if (
-                    oldUser.name != newUser.name ||
-                    oldUser.email != newUser.email ||
-                    oldUser.picture != newUser.picture ||
-                    oldUser.nickname != newUser.nickname
-                ) {
-                    r = await userQueries.updateOne(newUser);
+            if (process.env.LOG_LEVEL >= LOG_LEVEL.INFO)
+                LOG("INFO", `User ${oldUser.name} (${oldUser.sub}) added`);
+            return;
+        }
 
-                    oldUser = !!r.rows && r.rows.length > 0 ? r.rows[0] : null;
+        // If it exist, let's check if it needs a refresh
+        if (oldUser.email != newUser.email || oldUser.picture != newUser.picture) {
+            r = await userQueries.updateOne(newUser);
+            oldUser = getRowsContent(r);
 
-                    if (process.env.LOG_LEVEL >= LOG_LEVEL.INFO)
-                        LOG("INFO",
-                            `User ${oldUser.name} (${oldUser.sub}) updated in database`
-                        );
-                } else {
-                    if (process.env.LOG_LEVEL >= LOG_LEVEL.INFO)
-                        LOG("INFO", `User ${oldUser.name} (${oldUser.sub}) logged in`);
-                }
-            }
+            if (process.env.LOG_LEVEL >= LOG_LEVEL.INFO)
+                LOG("INFO", `User ${oldUser.name} (${oldUser.sub}) updated`);
+            return;
+        }
+
+        if (process.env.LOG_LEVEL >= LOG_LEVEL.INFO)
+            LOG("INFO", `User ${oldUser.name} (${oldUser.sub}) logged in`);
+
+        function getRowsContent(rslt) {
+            return !!rslt.rows && rslt.rows.length > 0 ? rslt.rows[0] : null;
         }
     };
 

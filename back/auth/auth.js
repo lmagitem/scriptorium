@@ -10,19 +10,19 @@ module.exports = () => {
         passport.authenticate("auth0", {
             scope: "openid email profile",
         }),
-        (req, res) => {
+        (_req, res) => {
             res.redirect("/");
         }
     );
 
     router.get("/callback", (req, res, next) => {
-        passport.authenticate("auth0", (err, user, info) => {
+        passport.authenticate("auth0", (err, user, _info) => {
             if (err) return next(err);
 
             if (!user) return res.redirect("/login");
 
-            req.logIn(user, (err) => {
-                if (err) return next(err);
+            req.logIn(user, (e) => {
+                if (e) return next(e);
 
                 userService.saveUser(req.user || {});
 
@@ -40,7 +40,7 @@ module.exports = () => {
         const port = req.connection.localPort;
 
         if (port !== undefined && port !== 80 && port !== 443) {
-            returnTo = isProd ? `${returnTo}/` : `${returnTo}:${port}/`;
+            returnTo = prod ? `${returnTo}/` : `${returnTo}:${port}/`;
         }
 
         const logoutURL = new URL(`https://${process.env.AUTH0_DOMAIN}/v2/logout`);

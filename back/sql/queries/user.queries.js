@@ -31,7 +31,7 @@ module.exports = () => {
     };
 
     // Update entity
-    const updateById = async(req, res) => {
+    const updateById = async(req, _res) => {
         const id = parseInt(req.params.id);
         const user = req.body;
 
