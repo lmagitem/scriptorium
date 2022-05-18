@@ -2,7 +2,9 @@
 /back/public/
 .ssh
 .env
-local.env
+
+# Angular
+.angular/cache
 
 # Logs
 logs

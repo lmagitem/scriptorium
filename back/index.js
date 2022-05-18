@@ -2,7 +2,7 @@ const http = require("http");
 
 // Environment variables
 global.prod = process.env.args === "prod";
-require("dotenv").config({ path: prod ? "./.env" : "./local.env" });
+require("dotenv").config({ path: prod ? "./.env" : "./.env.local" });
 
 // Create app and expose server
 const app = require('./app');
