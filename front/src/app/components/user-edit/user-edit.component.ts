@@ -2,7 +2,7 @@ import { User } from './../../model/user';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserApiService } from 'src/app/service/user-api.service';
+import { UserApiService } from 'src/app/service/api/user-api.service';
 
 @Component({
   selector: 'app-user-edit',
