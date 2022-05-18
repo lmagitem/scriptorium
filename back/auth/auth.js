@@ -44,12 +44,7 @@ module.exports = () => {
         }
 
         const logoutURL = new URL(`https://${process.env.AUTH0_DOMAIN}/v2/logout`);
-
-        const searchString = querystring.stringify({
-            client_id: process.env.AUTH0_CLIENT_ID,
-            returnTo: returnTo,
-        });
-        logoutURL.search = searchString;
+        logoutURL.search = `client_id=${process.env.AUTH0_CLIENT_ID}&returnTo=${returnTo}`;
 
         res.redirect(logoutURL);
     });
