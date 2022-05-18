@@ -4,7 +4,7 @@
 .env
 
 # Angular
-.angular/cache
+front/.angular/cache
 
 # Logs
 logs
