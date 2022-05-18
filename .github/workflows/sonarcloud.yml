@@ -79,6 +79,8 @@ jobs:
             # Unique keys of your project and organization. You can find them in SonarCloud > Information (bottom-left menu)
             -Dsonar.projectKey=lmagitem_scriptorium
             -Dsonar.organization=lmagitem
+            -Dsonar.javascript.lcov.reportPaths=back/coverage/lcov.info,front/coverage/lcov.info
+            -Dsonar.exclusions=**/*.spec.js,**/*.spec.ts,front/src/polyfills.ts,front/src/test.ts,,front/src/environments/*.ts
             # Comma-separated paths to directories containing main source files.
             #-Dsonar.sources= # optional, default is project base directory
             # When you need the analysis to take place in a directory other than the one from which it was launched
