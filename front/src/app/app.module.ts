@@ -6,24 +6,17 @@ import { AppComponent } from './app.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './reducers';
+import { StoreModule } from './store/store.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    UserEditComponent,
-    UserListComponent,
-  ],
+  declarations: [AppComponent, UserEditComponent, UserListComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    StoreModule.forRoot(reducers, {
-      metaReducers
-    }),
+    StoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -2,7 +2,6 @@ module.exports = () => {
     const express = require("express");
     const router = express.Router();
     const passport = require("passport");
-    const querystring = require("querystring");
     const userService = require("../services/user.service")();
 
     router.get(
