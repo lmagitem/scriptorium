@@ -1,18 +1,16 @@
 import { ActionReducerMap } from '@ngrx/store';
 import { AppActionTypes } from './app';
 import { appReducer, AppState } from './app/app.reducers';
+import { pixiReducer, PixiState } from './pixi';
 
 export interface State {
   app: AppState;
-  /*  pixi: {
-    width: number;
-    height: number;
-  };*/
+  pixi: PixiState;
 }
 
 export let stateReducers: ActionReducerMap<State> = {
   app: appReducer,
-  // pixiReducer,
+  pixi: pixiReducer,
 };
 
 export let appActions = [AppActionTypes];
