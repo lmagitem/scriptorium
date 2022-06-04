@@ -8,6 +8,7 @@ import { PixiComponent } from './pixi/pixi.component';
 import { RightPanelComponent } from './right-panel/right-panel.component';
 import { MapRoutingModule } from './map-routing.module';
 
+/** Module that manages the main page of the app in which you can find the map, chat and explorer. */
 @NgModule({
   declarations: [
     FooterComponent,

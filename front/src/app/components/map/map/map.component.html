@@ -1,5 +1,9 @@
-<map-menu></map-menu>
-<map-left-panel></map-left-panel>
-<map-pixi></map-pixi>
-<map-right-panel></map-right-panel>
-<map-footer></map-footer>
+<div id="map" [ngStyle]="{ width: width + 'px', height: height + 'px' }">
+    <div id="above-map">
+        <map-menu id="map-menu"></map-menu>
+        <map-left-panel id="map-left-panel"></map-left-panel>
+        <map-right-panel id="map-right-panel"></map-right-panel>
+    </div>
+    <map-pixi id="map-pixi" [ngStyle]="{ width: pixiWidth + 'px', height: pixiHeight + 'px' }"></map-pixi>
+    <map-footer id="map-footer"></map-footer>
+</div>

@@ -4,11 +4,13 @@ import { migrateReducerState } from '../store.utils';
 export interface AppState {
   width: number;
   height: number;
+  footerHeight: number;
 }
 
 const newInitialState: AppState = {
-  width: -1,
-  height: -1,
+  width: 0,
+  height: 0,
+  footerHeight: 0,
 };
 
 const initialState: AppState = migrateReducerState(
@@ -27,6 +29,7 @@ export function appReducer(
         ...state,
         width: action.payload.width,
         height: action.payload.height,
+        footerHeight: action.payload.footerHeight,
       };
     }
 

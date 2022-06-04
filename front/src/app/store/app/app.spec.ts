@@ -5,13 +5,14 @@ describe('AppStore', () => {
   const appSettings = AppStore.appReducer;
   const createState = (props = {}) => {
     const defaultState: AppStore.AppState = {
-      width: -1,
-      height: -1,
+      width: 0,
+      height: 0,
+      footerHeight: 0,
     };
     return { ...defaultState, ...props };
   };
 
-  describe('Reducer', () => {
+  describe('appReducer()', () => {
     let state: AppStore.AppState;
 
     beforeEach(() => {
@@ -19,18 +20,28 @@ describe('AppStore', () => {
     });
 
     it('should update app size when AppSizeChange action is emitted', () => {
-      expect(state.width).toBe(-1);
-      expect(state.height).toBe(-1);
-
+      // Given
+      expect(state.width).toBe(0);
+      expect(state.height).toBe(0);
+      expect(state.footerHeight).toBe(0);
       const newWidth = 800;
       const newHeight = 600;
+      const newFooterHeight = 60;
+
+      // When
       state = appSettings(
         state,
-        new AppStore.AppSizeChange({ width: newWidth, height: newHeight })
+        new AppStore.AppSizeChange({
+          width: newWidth,
+          height: newHeight,
+          footerHeight: newFooterHeight,
+        })
       );
 
+      // Then
       expect(state.width).toBe(newWidth);
       expect(state.height).toBe(newHeight);
+      expect(state.footerHeight).toBe(newFooterHeight);
     });
   });
 
@@ -42,19 +53,31 @@ describe('AppStore', () => {
     });
 
     it('should return a properly updated value after AppSizeChange action was emitted', () => {
+      // Given
       expect(JSON.stringify(getAppSize({ app: state }))).toEqual(
-        JSON.stringify({ width: -1, height: -1 })
+        JSON.stringify({ width: 0, height: 0, footerHeight: 0 })
       );
-
       const newWidth = 800;
       const newHeight = 600;
+      const newFooterHeight = 60;
+
+      // When
       state = appSettings(
         state,
-        new AppStore.AppSizeChange({ width: newWidth, height: newHeight })
+        new AppStore.AppSizeChange({
+          width: newWidth,
+          height: newHeight,
+          footerHeight: newFooterHeight,
+        })
       );
 
+      // Then
       expect(JSON.stringify(getAppSize({ app: state }))).toEqual(
-        JSON.stringify({ width: newWidth, height: newHeight })
+        JSON.stringify({
+          width: newWidth,
+          height: newHeight,
+          footerHeight: newFooterHeight,
+        })
       );
     });
   });
