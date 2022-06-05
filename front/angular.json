@@ -28,7 +28,9 @@
                         "inlineStyleLanguage": "less",
                         "assets": ["src/favicon.ico", "src/assets"],
                         "styles": [
-                            "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                            "node_modules/primeflex/primeflex.css",
+                            "node_modules/primeng/resources/primeng.min.css",
+                            "node_modules/primeicons/primeicons.css",
                             "src/styles.less"
                         ],
                         "scripts": [],
@@ -91,7 +93,12 @@
                         "karmaConfig": "karma.conf.js",
                         "inlineStyleLanguage": "less",
                         "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": ["src/styles.less"],
+                        "styles": [
+                            "node_modules/primeflex/primeflex.css",
+                            "node_modules/primeng/resources/primeng.min.css",
+                            "node_modules/primeicons/primeicons.css",
+                            "src/styles.less"
+                        ],
                         "scripts": []
                     }
                 }

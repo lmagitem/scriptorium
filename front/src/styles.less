@@ -3,17 +3,19 @@
 body {
   background-color: black;
   color: rgb(217, 238, 238);
+  margin: 0;
 }
 
 #map {
   position: relative;
 }
 
-#above-map{
+#above-map {
   position: absolute;
+  width: 100%;
   top: 0;
   left: 0;
-  z-index: 25;
+  pointer-events: none;
 }
 
 #map-pixi {
@@ -22,11 +24,12 @@ body {
 
 #map-menu,
 #map-left-panel,
-#map-right-panel{
+#map-right-panel {
   background-color: rgba(35, 33, 30, 0.64);
+  pointer-events: all;
 }
 
-#map-footer{
+#map-footer {
   position: absolute;
   bottom: 0;
   left: 0;

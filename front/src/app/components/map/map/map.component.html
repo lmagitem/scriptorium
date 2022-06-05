@@ -1,8 +1,13 @@
 <div id="map" [ngStyle]="{ width: width + 'px', height: height + 'px' }">
     <div id="above-map">
-        <map-menu id="map-menu"></map-menu>
-        <map-left-panel id="map-left-panel"></map-left-panel>
-        <map-right-panel id="map-right-panel"></map-right-panel>
+        <div class="flex flex-nowrap">
+            <map-menu id="map-menu" class="flex-grow-1"></map-menu>
+        </div>
+        <div class="flex flex-nowrap">
+            <map-left-panel id="map-left-panel" class="flex-shrink-0"></map-left-panel>
+            <div class="flex-grow-1"></div>
+            <map-right-panel id="map-right-panel" class="flex-grow-1"></map-right-panel>
+        </div>
     </div>
     <map-pixi id="map-pixi" [ngStyle]="{ width: pixiWidth + 'px', height: pixiHeight + 'px' }"></map-pixi>
     <map-footer id="map-footer"></map-footer>
