@@ -1,12 +1,14 @@
 <div id="map" [ngStyle]="{ width: width + 'px', height: height + 'px' }">
-    <div id="above-map">
-        <div class="flex flex-nowrap">
-            <map-menu id="map-menu" class="flex-grow-1"></map-menu>
-        </div>
-        <div class="flex flex-nowrap">
-            <map-left-panel id="map-left-panel" class="flex-shrink-0"></map-left-panel>
-            <div class="flex-grow-1"></div>
-            <map-right-panel id="map-right-panel" class="flex-grow-1"></map-right-panel>
+    <div id="above-map" [ngStyle]="{ height: pixiHeight + 'px' }">
+        <div class="flex flex-column align-items-stretch w-full h-full">
+            <div class="flex flex-nowrap flex-shrink-0">
+                <map-menu id="map-menu" class="flex-grow-1 mt-3 mx-3"></map-menu>
+            </div>
+            <div class="flex flex-nowrap align-items-stretch flex-grow-1">
+                <map-left-panel id="map-left-panel" class="flex-shrink-0 m-3"></map-left-panel>
+                <div class="flex-grow-1 flex-2"></div>
+                <map-right-panel id="map-right-panel" class="flex-grow-1 flex-3 m-3"></map-right-panel>
+            </div>
         </div>
     </div>
     <map-pixi id="map-pixi" [ngStyle]="{ width: pixiWidth + 'px', height: pixiHeight + 'px' }"></map-pixi>
