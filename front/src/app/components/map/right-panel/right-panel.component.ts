@@ -5,8 +5,4 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './right-panel.component.html',
   styleUrls: ['./right-panel.component.less'],
 })
-export class RightPanelComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class RightPanelComponent {}
