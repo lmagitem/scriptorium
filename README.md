@@ -37,7 +37,7 @@
 <h3 align="center">Scriptorium</h3>
 
   <p align="center">
-    An interactive Wiki that serves at VTT and campaign tracker for various games taking place in a grim dark sci-fi setting.
+    An interactive Wiki that serves as VTT and campaign tracker for various games taking place in a grim dark sci-fi setting.
     <br />
     <a href="https://github.com/lmagitem/scriptorium"><strong>Explore the docs »</strong></a>
     <br />
